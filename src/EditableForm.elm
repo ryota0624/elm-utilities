@@ -1,23 +1,36 @@
-module EditableForm exposing (..)
+module EditableForm exposing (EditableForm, EditableTextForm, initialEditableForm, ViewConfig, EditViewProps, viewEditingForm)
+
+{-|
+# Definition
+@docs EditableForm, EditableTextForm, EditViewProps, ViewConfig
+
+# function
+@docs initialEditableForm, viewEditingForm
+
+-}
 
 import Html exposing (Html, Attribute)
-import Html.Events exposing (onClick, onBlur, onInput)
 import Task exposing (Task)
 import Dom
 
-
+{-|
+-}
 type EditableForm value
     = InRead value
     | InEdit { prev : value, value : value }
 
 
+{-|
+-}
 type alias EditableTextForm =
     EditableForm String
 
 
-initialEditableForm : String -> EditableTextForm
-initialEditableForm text =
-    InRead text
+{-|
+-}
+initialEditableForm : a -> EditableForm a
+initialEditableForm a =
+    InRead a
 
 
 toggleEdit : EditableForm v -> EditableForm v
@@ -50,72 +63,49 @@ updateEditForm inputValue form =
             form
 
 
-save : EditableForm v -> ( EditableForm v, v )
+save : EditableForm v -> EditableForm v
 save form =
     case form of
         InEdit { prev, value } ->
-            ( InRead value, value )
+            InRead value
 
         InRead value ->
-            ( form, value )
+            form
 
-
-type alias OnChangeFormPayload value =
-    { form : EditableForm value
-    , maybeTask : Maybe (Task Dom.Error ())
+{-|
+-}
+type alias EditViewProps msg value =
+    { cancel : msg
+    , update : value -> msg
+    , save : msg
     }
 
 
-type alias ViewEditingTextFormConfig msg value =
-    { container : List (Attribute msg) -> List (Html msg) -> Html msg
-    , containerAttributes : List (Attribute msg)
-    , readView : value -> List (Attribute msg) -> Html msg
-    , editView : value -> { cancel: msg, updateForm: (value -> msg), save: msg } -> List (Attribute msg) -> Html msg
-    , onChangeForm : OnChangeFormPayload value -> msg
-    , editFormUniqueId : String
-    }
-
-
-noTaskChangeForm : EditableForm v -> OnChangeFormPayload v
-noTaskChangeForm form =
-    { form = form, maybeTask = Nothing }
-
-
-viewEditingForm : EditableForm String -> ViewEditingTextFormConfig msg String -> Html msg
-viewEditingForm editingForm config =
-    viewCustomEditingForm editingForm
-        { container = config.container
-        , containerAttributes = config.containerAttributes
-        , onChangeForm = config.onChangeForm
-        , readView = config.readView
-        , editView = (\value -> \blur -> \updateEditForm -> config.editView value )
-        , editFormUniqueId = config.editFormUniqueId
-        }
-
-
-type alias CustomViewConfig msg value =
-    { container : List (Attribute msg) -> List (Html msg) -> Html msg
-    , containerAttributes : List (Attribute msg)
-    , readView : value -> List (Attribute msg) -> Html msg
+{-|
+-}
+type alias ViewConfig msg value =
+    { readView : value -> { focus : msg } -> Html msg
     , editView :
         value
-        -> msg
-        -> (value -> msg)
-        -> Html msg -- value, msg: cancel, value -> msg: onChangeForm
-    , onChangeForm : OnChangeFormPayload value -> msg
+        -> EditViewProps msg value
+        -> Html msg
+    , onFocus : EditableForm value -> Task Dom.Error () -> msg
+    , onSave : EditableForm value -> msg
+    , onChangeForm : EditableForm value -> msg
     , editFormUniqueId : String
     }
 
-
-viewCustomEditingForm : EditableForm v -> CustomViewConfig msg v -> Html msg
-viewCustomEditingForm editingForm config =
+{-| 
+-}
+viewEditingForm : EditableForm v -> ViewConfig msg v -> Html msg
+viewEditingForm editingForm config =
     case editingForm of
         InRead value ->
-            config.container ([ onClick <| config.onChangeForm <| { form = toggleEdit editingForm, maybeTask = Just (Dom.focus config.editFormUniqueId) } ] ++ config.containerAttributes)
-                [ config.readView value []
-                ]
+            config.readView value { focus = config.onFocus (toggleEdit editingForm) (Dom.focus config.editFormUniqueId) }
 
         InEdit { prev, value } ->
-            config.container config.containerAttributes
-                [ config.editView value (config.onChangeForm <| noTaskChangeForm <| resetInRead editingForm) ((flip updateEditForm) editingForm >> noTaskChangeForm >> config.onChangeForm)
-                ]
+            config.editView value
+                { cancel = (config.onChangeForm <| resetInRead editingForm)
+                , update = ((flip updateEditForm) editingForm >> config.onChangeForm)
+                , save = (config.onSave <| save editingForm)
+                }
