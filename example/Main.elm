@@ -241,9 +241,9 @@ userEditableElement user =
                                     ]
                                 , div [ Attr.class "editable-close-area", Events.onClick cancel ] []
                                 ]
-            , onChange = (\form -> (UpdateUserDto user.id (UpdateSkills form)))
+            , onChange = UpdateSkills >> UpdateUserDto user.id
             , onFocus = (\form -> \task -> (FocusForm user.id (UpdateSkills form) task))
-            , onSave = (\form -> (SaveForm user.id (UpdateSkills form)))
+            , onSave = UpdateSkills >> SaveForm user.id
             , uniqueId = "skills"
             }
         ]
