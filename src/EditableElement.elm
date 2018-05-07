@@ -1,17 +1,20 @@
-module EditableElement exposing (EditableElement, editableElement, ViewConfig, EditViewProps, viewEditableElement)
+module EditableElement exposing (EditableElement, editableElement, ViewConfig, EditViewProps, viewEditableElement, Event(..))
 
 {-|
 # Definition
-@docs EditableElement, EditableTextForm, EditViewProps, ViewConfig
+@docs EditableElement, EditViewProps, ViewConfig, Event
 
 # function
-@docs editableElement, viewEditingForm
+@docs editableElement, viewEditableElement
 
 -}
 
 import Html exposing (Html, Attribute)
 import Task exposing (Task)
 import Dom
+{-|
+-}
+type Event = Save | Focus (Task Dom.Error ()) | Cancel | None
 
 {-|
 -}
@@ -81,9 +84,7 @@ type alias ViewConfig msg value =
         value
         -> EditViewProps msg value
         -> Html msg
-    , onFocus : EditableElement value -> Task Dom.Error () -> msg
-    , onSave : EditableElement value -> msg
-    , onChange : EditableElement value -> msg
+    , onChange : Event -> EditableElement value -> msg
     , uniqueId : String
     }
 
@@ -93,11 +94,11 @@ viewEditableElement : EditableElement v -> ViewConfig msg v -> Html msg
 viewEditableElement element config =
     case element of
         Displaying value ->
-            config.displayView value { focus = config.onFocus (toggleToEditing element) (Dom.focus config.uniqueId) }
+            config.displayView value { focus = config.onChange (Focus <| Dom.focus config.uniqueId) (toggleToEditing element) }
 
         Editing { prev, value } ->
             config.editView value
-                { cancel = (config.onChange <| resetToDisplaying element)
-                , update = ((flip update) element >> config.onChange)
-                , save = (config.onSave <| save element)
+                { cancel = config.onChange Cancel (resetToDisplaying element)
+                , update = (flip update) element >> (\updatedForm -> config.onChange None updatedForm)
+                , save = config.onChange Save (save element)
                 }

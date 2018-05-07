@@ -104,40 +104,30 @@ init =
 
 
 type Msg
-    = UpdateUserDto Id UserFormMsg
+    = UpdateUserDto Id EditableElement.Event UserFormMsg
     | ReceiveFocusResult (Result Dom.Error ())
-    | SaveForm Id UserFormMsg
-    | FocusForm Id UserFormMsg (Task Dom.Error ())
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        FocusForm id userMsg task ->
-            let
-                cmd =
-                    Task.attempt ReceiveFocusResult task
+         UpdateUserDto id formEvent userMsg ->
+             let
+                cmd = case formEvent of
+                    EditableElement.Focus task ->
+                        Task.attempt ReceiveFocusResult task
+                    EditableElement.Save ->
+                        Debug.crash ("save")
+                    EditableElement.Cancel ->
+                        Cmd.none
+                    EditableElement.None ->
+                        Cmd.none
 
-                ( nextModel, subCmd ) =
-                    update (UpdateUserDto id userMsg) model
-            in
-                ( nextModel, Cmd.batch [ cmd, subCmd ] )
-
-        UpdateUserDto id userMsg ->
-            let
                 updatedUsers =
-                    model.users |> Dict.update id (Maybe.map (updateUserFormDto userMsg))
-            in
-                ( { model | users = updatedUsers }, Cmd.none )
-
-        SaveForm id userMsg ->
-            let
-                ( nextModel, subCmd ) =
-                    update (UpdateUserDto id userMsg) model
-            in
-                ( nextModel, Cmd.batch [ Cmd.none, subCmd ] )
-
-        ReceiveFocusResult result ->
+                   model.users |> Dict.update id (Maybe.map (updateUserFormDto userMsg))
+             in
+                ( { model | users = updatedUsers }, cmd)
+         ReceiveFocusResult result ->
             ( model, Cmd.none )
 
 
@@ -167,9 +157,7 @@ userEditableElement user =
                                 ]
                             , div [ Attr.class "editable-close-area", Events.onClick cancel ] []
                             ]
-            , onChange = (UpdateName >> (UpdateUserDto user.id))
-            , onFocus = (\form -> \task -> (FocusForm user.id (UpdateName form) task))
-            , onSave = (\form -> (SaveForm user.id (UpdateName form)))
+            , onChange = (\event -> UpdateName >> UpdateUserDto user.id event)
             , uniqueId = "username"
             }
         , text ",   age: "
@@ -186,9 +174,7 @@ userEditableElement user =
                                 ]
                             , div [ Attr.class "editable-close-area", Events.onClick cancel ] []
                             ]
-            , onChange = (UpdateAge >> (UpdateUserDto user.id))
-            , onFocus = (\form -> \task -> (FocusForm user.id (UpdateAge form) task))
-            , onSave = (\form -> (SaveForm user.id (UpdateAge form)))
+            , onChange = (\event -> UpdateAge >> UpdateUserDto user.id event)
             , uniqueId = "age"
             }
         , text ",   gender: "
@@ -209,9 +195,7 @@ userEditableElement user =
                                     ]
                                 , div [ Attr.class "editable-close-area", Events.onClick cancel ] []
                                 ]
-            , onChange = (\form -> (UpdateUserDto user.id (UpdateGender form)))
-            , onFocus = (\form -> \task -> (FocusForm user.id (UpdateGender form) task))
-            , onSave = (\form -> (SaveForm user.id (UpdateGender form)))
+            , onChange = (\event -> UpdateGender >> UpdateUserDto user.id event)
             , uniqueId = "gender"
             }
         , text ",   skills: "
@@ -241,9 +225,7 @@ userEditableElement user =
                                     ]
                                 , div [ Attr.class "editable-close-area", Events.onClick cancel ] []
                                 ]
-            , onChange = UpdateSkills >> UpdateUserDto user.id
-            , onFocus = (\form -> \task -> (FocusForm user.id (UpdateSkills form) task))
-            , onSave = UpdateSkills >> SaveForm user.id
+            , onChange = (\event -> UpdateSkills >> UpdateUserDto user.id event)
             , uniqueId = "skills"
             }
         ]
