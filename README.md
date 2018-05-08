@@ -3,6 +3,6 @@
 ## Sample
 - `elm-reactor`からの`examples/Main.elm`
 
-## EditableForm
+## EditableElement
 ## LabeledGroupCheckBox
 ## SelectForm
