@@ -9,6 +9,8 @@ import Task exposing (Task)
 import Html.Events as Events
 import LabeledGroupCheckBox
 import SelectForm
+import TableFrame
+
 
 ---- MODEL ----
 
@@ -137,7 +139,10 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    Html.ul [] (model.users |> Dict.values |> List.map userEditableElement)
+    Html.div []
+        [ viewUserTable users
+        , Html.ul [] (model.users |> Dict.values |> List.map userEditableElement)
+        ]
 
 
 userEditableElement : UserFormDto -> Html Msg
@@ -229,6 +234,58 @@ userEditableElement user =
             , uniqueId = "skills"
             }
         ]
+
+
+type UserTableHeader
+    = ID
+    | NAME
+    | AGE
+    | GENDER
+    | SKILLS
+
+
+viewUserTable : List User -> Html msg
+viewUserTable users =
+    TableFrame.view
+        { headerElements = [ ID, NAME, AGE, GENDER, SKILLS ]
+        , datas = users
+        , viewTableContainer = Html.table []
+        , viewBodyContainer = Html.tbody []
+        , viewHeaderContainer = Html.thead []
+        , headerConfig =
+            { viewHeaderRowContainer = \children -> Html.tr [] children
+            , viewHeaderRowCell = \element -> Html.th [] [ Html.text <| toString element ]
+            }
+        , rowConfig =
+            { viewTableRowContainer = \data -> Html.tr []
+            , viewTableRowCell =
+                \data ->
+                    \headerElement ->
+                        let
+                            container element =
+                                Html.td [] [ Html.text element ]
+                        in
+                            container <|
+                                case headerElement of
+                                    ID ->
+                                        data.id |> toString
+
+                                    NAME ->
+                                        data.name
+
+                                    AGE ->
+                                        data.age |> toString
+
+                                    GENDER ->
+                                        data.gender |> toString
+
+                                    SKILLS ->
+                                        data.skills |> toString
+            }
+        }
+
+
+
 ---- PROGRAM ----
 
 

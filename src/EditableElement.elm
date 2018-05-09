@@ -1,6 +1,8 @@
 module EditableElement exposing (EditableElement, editableElement, ViewConfig, EditViewProps, viewEditableElement, Event(..))
 
 {-|
+
+
 # Definition
 @docs EditableElement, EditViewProps, ViewConfig, Event
 
@@ -16,14 +18,14 @@ import Dom
 -}
 type Event = Save | Focus (Task Dom.Error ()) | Cancel | None
 
-{-|
--}
+
+{-| -}
 type EditableElement value
     = Displaying value
     | Editing { prev : value, value : value }
 
-{-|
--}
+
+{-| -}
 editableElement : a -> EditableElement a
 editableElement a =
     Displaying a
@@ -68,16 +70,16 @@ save form =
         Displaying value ->
             form
 
-{-|
--}
+
+{-| -}
 type alias EditViewProps msg value =
     { cancel : msg
     , update : value -> msg
     , save : msg
     }
 
-{-|
--}
+
+{-| -}
 type alias ViewConfig msg value =
     { displayView : value -> { focus : msg } -> Html msg
     , editView :
@@ -88,8 +90,8 @@ type alias ViewConfig msg value =
     , uniqueId : String
     }
 
-{-| 
--}
+
+{-| -}
 viewEditableElement : EditableElement v -> ViewConfig msg v -> Html msg
 viewEditableElement element config =
     case element of

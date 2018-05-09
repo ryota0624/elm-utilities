@@ -8618,16 +8618,10 @@ var _user$project$EditableElement$EditViewProps = F3(
 	function (a, b, c) {
 		return {cancel: a, update: b, save: c};
 	});
-var _user$project$EditableElement$ViewConfig = F4(
-	function (a, b, c, d) {
-		return {displayView: a, editView: b, onChange: c, uniqueId: d};
+var _user$project$EditableElement$ViewConfig = F6(
+	function (a, b, c, d, e, f) {
+		return {displayView: a, editView: b, onFocus: c, onSave: d, onChange: e, uniqueId: f};
 	});
-var _user$project$EditableElement$None = {ctor: 'None'};
-var _user$project$EditableElement$Cancel = {ctor: 'Cancel'};
-var _user$project$EditableElement$Focus = function (a) {
-	return {ctor: 'Focus', _0: a};
-};
-var _user$project$EditableElement$Save = {ctor: 'Save'};
 var _user$project$EditableElement$Editing = function (a) {
 	return {ctor: 'Editing', _0: a};
 };
@@ -8682,29 +8676,22 @@ var _user$project$EditableElement$viewEditableElement = F2(
 				_p5._0,
 				{
 					focus: A2(
-						config.onChange,
-						_user$project$EditableElement$Focus(
-							_elm_lang$dom$Dom$focus(config.uniqueId)),
-						_user$project$EditableElement$toggleToEditing(element))
+						config.onFocus,
+						_user$project$EditableElement$toggleToEditing(element),
+						_elm_lang$dom$Dom$focus(config.uniqueId))
 				});
 		} else {
 			return A2(
 				config.editView,
 				_p5._0.value,
 				{
-					cancel: A2(
-						config.onChange,
-						_user$project$EditableElement$Cancel,
+					cancel: config.onChange(
 						_user$project$EditableElement$resetToDisplaying(element)),
 					update: function (_p6) {
-						return function (updatedForm) {
-							return A2(config.onChange, _user$project$EditableElement$None, updatedForm);
-						}(
+						return config.onChange(
 							A3(_elm_lang$core$Basics$flip, _user$project$EditableElement$update, element, _p6));
 					},
-					save: A2(
-						config.onChange,
-						_user$project$EditableElement$Save,
+					save: config.onSave(
 						_user$project$EditableElement$save(element))
 				});
 		}
@@ -8796,8 +8783,8 @@ var _user$project$SelectForm$selectForm = F2(
 					return _elm_lang$core$Native_Utils.crashCase(
 						'SelectForm',
 						{
-							start: {line: 49, column: 25},
-							end: {line: 54, column: 79}
+							start: {line: 55, column: 25},
+							end: {line: 60, column: 79}
 						},
 						_p0)(
 						A2(_elm_lang$core$Basics_ops['++'], 'unknown selected value:', str));
@@ -8871,6 +8858,54 @@ var _user$project$SelectForm$defaultSelectConfig = F2(
 var _user$project$SelectForm$SelectFormConfig = F6(
 	function (a, b, c, d, e, f) {
 		return {optionAttrs: a, attrs: b, toString: c, toLabel: d, value: e, onSelect: f};
+	});
+var _user$project$TableFrame$viewTableRow = F3(
+	function (config, headerElements, data) {
+		return A2(
+			config.viewTableRowContainer,
+			data,
+			A2(
+				_elm_lang$core$List$map,
+				config.viewTableRowCell(data),
+				headerElements));
+	});
+var _user$project$TableFrame$viewTableHeader = F2(
+	function (headerElements, config) {
+		return config.viewHeaderRowContainer(
+			A2(_elm_lang$core$List$map, config.viewHeaderRowCell, headerElements));
+	});
+var _user$project$TableFrame$view = function (config) {
+	return config.viewTableContainer(
+		{
+			ctor: '::',
+			_0: config.viewHeaderContainer(
+				{
+					ctor: '::',
+					_0: A2(_user$project$TableFrame$viewTableHeader, config.headerElements, config.headerConfig),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: config.viewBodyContainer(
+					A2(
+						_elm_lang$core$List$map,
+						A2(_user$project$TableFrame$viewTableRow, config.rowConfig, config.headerElements),
+						config.datas)),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$TableFrame$HeaderConfig = F2(
+	function (a, b) {
+		return {viewHeaderRowContainer: a, viewHeaderRowCell: b};
+	});
+var _user$project$TableFrame$RowConfig = F2(
+	function (a, b) {
+		return {viewTableRowContainer: a, viewTableRowCell: b};
+	});
+var _user$project$TableFrame$Config = F7(
+	function (a, b, c, d, e, f, g) {
+		return {datas: a, headerElements: b, viewTableContainer: c, viewHeaderContainer: d, viewBodyContainer: e, headerConfig: f, rowConfig: g};
 	});
 var _user$project$Main$userToDto = function (user) {
 	return {
@@ -8993,52 +9028,85 @@ var _user$project$Main$UpdateAge = function (a) {
 var _user$project$Main$UpdateName = function (a) {
 	return {ctor: 'UpdateName', _0: a};
 };
+var _user$project$Main$FocusForm = F3(
+	function (a, b, c) {
+		return {ctor: 'FocusForm', _0: a, _1: b, _2: c};
+	});
+var _user$project$Main$SaveForm = F2(
+	function (a, b) {
+		return {ctor: 'SaveForm', _0: a, _1: b};
+	});
 var _user$project$Main$ReceiveFocusResult = function (a) {
 	return {ctor: 'ReceiveFocusResult', _0: a};
 };
+var _user$project$Main$UpdateUserDto = F2(
+	function (a, b) {
+		return {ctor: 'UpdateUserDto', _0: a, _1: b};
+	});
 var _user$project$Main$update = F2(
 	function (msg, model) {
 		var _p1 = msg;
-		if (_p1.ctor === 'UpdateUserDto') {
-			var updatedUsers = A3(
-				_elm_lang$core$Dict$update,
-				_p1._0,
-				_elm_lang$core$Maybe$map(
-					_user$project$Main$updateUserFormDto(_p1._2)),
-				model.users);
-			var cmd = function () {
-				var _p2 = _p1._1;
-				switch (_p2.ctor) {
-					case 'Focus':
-						return A2(_elm_lang$core$Task$attempt, _user$project$Main$ReceiveFocusResult, _p2._0);
-					case 'Save':
-						return _elm_lang$core$Native_Utils.crashCase(
-							'Main',
-							{
-								start: {line: 116, column: 23},
-								end: {line: 124, column: 33}
-							},
-							_p2)('save');
-					case 'Cancel':
-						return _elm_lang$core$Platform_Cmd$none;
-					default:
-						return _elm_lang$core$Platform_Cmd$none;
-				}
-			}();
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					model,
-					{users: updatedUsers}),
-				_1: cmd
-			};
-		} else {
-			return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		switch (_p1.ctor) {
+			case 'FocusForm':
+				var _p2 = A2(
+					_user$project$Main$update,
+					A2(_user$project$Main$UpdateUserDto, _p1._0, _p1._1),
+					model);
+				var nextModel = _p2._0;
+				var subCmd = _p2._1;
+				var cmd = A2(_elm_lang$core$Task$attempt, _user$project$Main$ReceiveFocusResult, _p1._2);
+				return {
+					ctor: '_Tuple2',
+					_0: nextModel,
+					_1: _elm_lang$core$Platform_Cmd$batch(
+						{
+							ctor: '::',
+							_0: cmd,
+							_1: {
+								ctor: '::',
+								_0: subCmd,
+								_1: {ctor: '[]'}
+							}
+						})
+				};
+			case 'UpdateUserDto':
+				var updatedUsers = A3(
+					_elm_lang$core$Dict$update,
+					_p1._0,
+					_elm_lang$core$Maybe$map(
+						_user$project$Main$updateUserFormDto(_p1._1)),
+					model.users);
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{users: updatedUsers}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'SaveForm':
+				var _p3 = A2(
+					_user$project$Main$update,
+					A2(_user$project$Main$UpdateUserDto, _p1._0, _p1._1),
+					model);
+				var nextModel = _p3._0;
+				var subCmd = _p3._1;
+				return {
+					ctor: '_Tuple2',
+					_0: nextModel,
+					_1: _elm_lang$core$Platform_Cmd$batch(
+						{
+							ctor: '::',
+							_0: _elm_lang$core$Platform_Cmd$none,
+							_1: {
+								ctor: '::',
+								_0: subCmd,
+								_1: {ctor: '[]'}
+							}
+						})
+				};
+			default:
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 		}
-	});
-var _user$project$Main$UpdateUserDto = F3(
-	function (a, b, c) {
-		return {ctor: 'UpdateUserDto', _0: a, _1: b, _2: c};
 	});
 var _user$project$Main$userEditableElement = function (user) {
 	return A2(
@@ -9137,14 +9205,25 @@ var _user$project$Main$userEditableElement = function (user) {
 										}
 									});
 							}),
-						onChange: function (event) {
-							return function (_p8) {
+						onChange: function (_p8) {
+							return A2(
+								_user$project$Main$UpdateUserDto,
+								user.id,
+								_user$project$Main$UpdateName(_p8));
+						},
+						onFocus: F2(
+							function (form, task) {
 								return A3(
-									_user$project$Main$UpdateUserDto,
+									_user$project$Main$FocusForm,
 									user.id,
-									event,
-									_user$project$Main$UpdateName(_p8));
-							};
+									_user$project$Main$UpdateName(form),
+									task);
+							}),
+						onSave: function (form) {
+							return A2(
+								_user$project$Main$SaveForm,
+								user.id,
+								_user$project$Main$UpdateName(form));
 						},
 						uniqueId: 'username'
 					}),
@@ -9241,14 +9320,25 @@ var _user$project$Main$userEditableElement = function (user) {
 												}
 											});
 									}),
-								onChange: function (event) {
-									return function (_p13) {
+								onChange: function (_p13) {
+									return A2(
+										_user$project$Main$UpdateUserDto,
+										user.id,
+										_user$project$Main$UpdateAge(_p13));
+								},
+								onFocus: F2(
+									function (form, task) {
 										return A3(
-											_user$project$Main$UpdateUserDto,
+											_user$project$Main$FocusForm,
 											user.id,
-											event,
-											_user$project$Main$UpdateAge(_p13));
-									};
+											_user$project$Main$UpdateAge(form),
+											task);
+									}),
+								onSave: function (form) {
+									return A2(
+										_user$project$Main$SaveForm,
+										user.id,
+										_user$project$Main$UpdateAge(form));
 								},
 								uniqueId: 'age'
 							}),
@@ -9343,14 +9433,25 @@ var _user$project$Main$userEditableElement = function (user) {
 														}
 													});
 											}),
-										onChange: function (event) {
-											return function (_p18) {
+										onChange: function (form) {
+											return A2(
+												_user$project$Main$UpdateUserDto,
+												user.id,
+												_user$project$Main$UpdateGender(form));
+										},
+										onFocus: F2(
+											function (form, task) {
 												return A3(
-													_user$project$Main$UpdateUserDto,
+													_user$project$Main$FocusForm,
 													user.id,
-													event,
-													_user$project$Main$UpdateGender(_p18));
-											};
+													_user$project$Main$UpdateGender(form),
+													task);
+											}),
+										onSave: function (form) {
+											return A2(
+												_user$project$Main$SaveForm,
+												user.id,
+												_user$project$Main$UpdateGender(form));
 										},
 										uniqueId: 'gender'
 									}),
@@ -9364,13 +9465,13 @@ var _user$project$Main$userEditableElement = function (user) {
 											user.skills,
 											{
 												displayView: F2(
-													function (v, _p19) {
-														var _p20 = _p19;
+													function (v, _p18) {
+														var _p19 = _p18;
 														return A2(
 															_elm_lang$html$Html$span,
 															{
 																ctor: '::',
-																_0: _elm_lang$html$Html_Events$onClick(_p20.focus),
+																_0: _elm_lang$html$Html_Events$onClick(_p19.focus),
 																_1: {ctor: '[]'}
 															},
 															{
@@ -9381,14 +9482,9 @@ var _user$project$Main$userEditableElement = function (user) {
 															});
 													}),
 												editView: F2(
-													function (v, _p21) {
-														var _p22 = _p21;
-														var _p25 = _p22.update;
-														var selectorConfig = A2(_user$project$SelectForm$defaultSelectConfig, v, _p25);
 														return A2(
 															_elm_lang$html$Html$div,
 															{ctor: '[]'},
-															{
 																ctor: '::',
 																_0: A2(
 																	_elm_lang$html$Html$div,
@@ -9402,19 +9498,19 @@ var _user$project$Main$userEditableElement = function (user) {
 																		_0: A3(
 																			_user$project$LabeledGroupCheckBox$labeledCheckBoxGroup,
 																			{
-																				uniqueId: function (_p23) {
+																				uniqueId: function (_p22) {
 																					return A2(
 																						F2(
 																							function (x, y) {
 																								return A2(_elm_lang$core$Basics_ops['++'], x, y);
 																							}),
 																						'-user-skill',
-																						_elm_lang$core$Basics$toString(_p23));
+																						_elm_lang$core$Basics$toString(_p22));
 																				},
 																				container: _elm_lang$html$Html$div(
 																					{ctor: '[]'}),
-																				onChangeChecked: _p25,
-																				labelContainer: function (_p24) {
+																				onChangeChecked: _p24,
+																				labelContainer: function (_p23) {
 																					return _elm_lang$html$Html$div(
 																						{ctor: '[]'});
 																				},
@@ -9441,7 +9537,7 @@ var _user$project$Main$userEditableElement = function (user) {
 																				_elm_lang$html$Html$button,
 																				{
 																					ctor: '::',
-																					_0: _elm_lang$html$Html_Events$onClick(_p22.save),
+																					_0: _elm_lang$html$Html_Events$onClick(_p21.save),
 																					_1: {ctor: '[]'}
 																				},
 																				{
@@ -9461,7 +9557,7 @@ var _user$project$Main$userEditableElement = function (user) {
 																			_0: _elm_lang$html$Html_Attributes$class('editable-close-area'),
 																			_1: {
 																				ctor: '::',
-																				_0: _elm_lang$html$Html_Events$onClick(_p22.cancel),
+																				_0: _elm_lang$html$Html_Events$onClick(_p21.cancel),
 																				_1: {ctor: '[]'}
 																			}
 																		},
@@ -9470,14 +9566,25 @@ var _user$project$Main$userEditableElement = function (user) {
 																}
 															});
 													}),
-												onChange: function (event) {
-													return function (_p26) {
+												onChange: function (_p25) {
+													return A2(
+														_user$project$Main$UpdateUserDto,
+														user.id,
+														_user$project$Main$UpdateSkills(_p25));
+												},
+												onFocus: F2(
+													function (form, task) {
 														return A3(
-															_user$project$Main$UpdateUserDto,
+															_user$project$Main$FocusForm,
 															user.id,
-															event,
-															_user$project$Main$UpdateSkills(_p26));
-													};
+															_user$project$Main$UpdateSkills(form),
+															task);
+													}),
+												onSave: function (_p26) {
+													return A2(
+														_user$project$Main$SaveForm,
+														user.id,
+														_user$project$Main$UpdateSkills(_p26));
 												},
 												uniqueId: 'skills'
 											}),
@@ -9491,14 +9598,117 @@ var _user$project$Main$userEditableElement = function (user) {
 			}
 		});
 };
+var _user$project$Main$SKILLS = {ctor: 'SKILLS'};
+var _user$project$Main$GENDER = {ctor: 'GENDER'};
+var _user$project$Main$AGE = {ctor: 'AGE'};
+var _user$project$Main$NAME = {ctor: 'NAME'};
+var _user$project$Main$ID = {ctor: 'ID'};
+var _user$project$Main$viewUserTable = function (users) {
+	return _user$project$TableFrame$view(
+		{
+			headerElements: {
+				ctor: '::',
+				_0: _user$project$Main$ID,
+				_1: {
+					ctor: '::',
+					_0: _user$project$Main$NAME,
+					_1: {
+						ctor: '::',
+						_0: _user$project$Main$AGE,
+						_1: {
+							ctor: '::',
+							_0: _user$project$Main$GENDER,
+							_1: {
+								ctor: '::',
+								_0: _user$project$Main$SKILLS,
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}
+			},
+			datas: users,
+			viewTableContainer: _elm_lang$html$Html$table(
+				{ctor: '[]'}),
+			viewBodyContainer: _elm_lang$html$Html$tbody(
+				{ctor: '[]'}),
+			viewHeaderContainer: _elm_lang$html$Html$thead(
+				{ctor: '[]'}),
+			headerConfig: {
+				viewHeaderRowContainer: function (children) {
+					return A2(
+						_elm_lang$html$Html$tr,
+						{ctor: '[]'},
+						children);
+				},
+				viewHeaderRowCell: function (element) {
+					return A2(
+						_elm_lang$html$Html$th,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(
+								_elm_lang$core$Basics$toString(element)),
+							_1: {ctor: '[]'}
+						});
+				}
+			},
+			rowConfig: {
+				viewTableRowContainer: function (data) {
+					return _elm_lang$html$Html$tr(
+						{ctor: '[]'});
+				},
+				viewTableRowCell: F2(
+					function (data, headerElement) {
+						var container = function (element) {
+							return A2(
+								_elm_lang$html$Html$td,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(element),
+									_1: {ctor: '[]'}
+								});
+						};
+						return container(
+							function () {
+								var _p27 = headerElement;
+								switch (_p27.ctor) {
+									case 'ID':
+										return _elm_lang$core$Basics$toString(data.id);
+									case 'NAME':
+										return data.name;
+									case 'AGE':
+										return _elm_lang$core$Basics$toString(data.age);
+									case 'GENDER':
+										return _elm_lang$core$Basics$toString(data.gender);
+									default:
+										return _elm_lang$core$Basics$toString(data.skills);
+								}
+							}());
+					})
+			}
+		});
+};
 var _user$project$Main$view = function (model) {
 	return A2(
-		_elm_lang$html$Html$ul,
+		_elm_lang$html$Html$div,
 		{ctor: '[]'},
-		A2(
-			_elm_lang$core$List$map,
-			_user$project$Main$userEditableElement,
-			_elm_lang$core$Dict$values(model.users)));
+		{
+			ctor: '::',
+			_0: _user$project$Main$viewUserTable(_user$project$Main$users),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$ul,
+					{ctor: '[]'},
+					A2(
+						_elm_lang$core$List$map,
+						_user$project$Main$userEditableElement,
+						_elm_lang$core$Dict$values(model.users))),
+				_1: {ctor: '[]'}
+			}
+		});
 };
 var _user$project$Main$main = _elm_lang$html$Html$program(
 	{
