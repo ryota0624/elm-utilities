@@ -116,8 +116,6 @@ init =
 type Msg
     = UpdateUserDto Id EditableElement.Event UserFormMsg
     | ReceiveFocusResult (Result Dom.Error ())
-    | SaveForm Id UserFormMsg
-    | FocusForm Id UserFormMsg (Task Dom.Error ())
     | UpdateSelector SS.Selector
     | Log String
 
@@ -144,10 +142,10 @@ update msg model =
          ReceiveFocusResult result ->
             ( model, Cmd.none )
 
-        UpdateSelector selector ->
+         UpdateSelector selector ->
             ( { model | selector = selector }, Cmd.none )
 
-        Log str ->
+         Log str ->
             (model , Cmd.none) |> Debug.log str
 
 

@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d8f5f70-fa14-4faa-b2b8-516aaca5b6dd" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/TableFrame.elm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/Main.elm" beforeDir="false" afterPath="$PROJECT_DIR$/example/Main.elm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EditableElement.elm" beforeDir="false" afterPath="$PROJECT_DIR$/src/EditableElement.elm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LabeledGroupCheckBox.elm" beforeDir="false" afterPath="$PROJECT_DIR$/src/LabeledGroupCheckBox.elm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SelectForm.elm" beforeDir="false" afterPath="$PROJECT_DIR$/src/SelectForm.elm" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,14 +17,14 @@
   <component name="FileEditorManager">
     <splitter split-orientation="horizontal" split-proportion="0.84395134">
       <split-first>
-        <splitter split-orientation="horizontal" split-proportion="0.7447578">
+        <splitter split-orientation="horizontal" split-proportion="0.40522063">
           <split-first>
             <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
               <file leaf-file-name="EditableElement.elm" pinned="false" current-in-tab="false">
                 <entry file="file://$PROJECT_DIR$/src/EditableElement.elm">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state relative-caret-position="255">
-                      <caret line="15" selection-start-line="15" selection-end-line="15" />
+                    <state relative-caret-position="190">
+                      <caret line="76" column="26" selection-start-line="76" selection-start-column="26" selection-end-line="76" selection-end-column="26" />
                     </state>
                   </provider>
                 </entry>
@@ -58,26 +53,26 @@
               <file leaf-file-name="SelectForm.elm" pinned="false" current-in-tab="false">
                 <entry file="file://$PROJECT_DIR$/src/SelectForm.elm">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state relative-caret-position="680">
-                      <caret line="46" column="17" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="17" />
+                    <state relative-caret-position="221">
+                      <caret line="13" selection-start-line="13" selection-end-line="13" />
                     </state>
                   </provider>
                 </entry>
               </file>
-              <file leaf-file-name="Main.elm" pinned="false" current-in-tab="false">
+              <file leaf-file-name="Main.elm" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/example/Main.elm">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state relative-caret-position="48">
-                      <caret line="264" column="37" lean-forward="true" selection-start-line="264" selection-start-column="37" selection-end-line="264" selection-end-column="37" />
+                    <state relative-caret-position="175">
+                      <caret line="117" column="46" selection-start-line="117" selection-start-column="46" selection-end-line="117" selection-end-column="46" />
                     </state>
                   </provider>
                 </entry>
               </file>
-              <file leaf-file-name="TableFrame.elm" pinned="false" current-in-tab="true">
+              <file leaf-file-name="TableFrame.elm" pinned="false" current-in-tab="false">
                 <entry file="file://$PROJECT_DIR$/src/TableFrame.elm">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state relative-caret-position="179">
-                      <caret line="31" column="55" lean-forward="true" selection-start-line="31" selection-start-column="55" selection-end-line="31" selection-end-column="55" />
+                    <state relative-caret-position="17">
+                      <caret line="1" selection-start-line="1" selection-end-line="1" />
                     </state>
                   </provider>
                 </entry>
@@ -104,11 +99,47 @@
           </split-first>
           <split-second>
             <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-              <file leaf-file-name="TableFrame.elm" pinned="false" current-in-tab="true">
+              <file leaf-file-name="Main.elm" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/example/Main.elm">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="-2131">
+                      <caret line="113" lean-forward="true" selection-start-line="113" selection-end-line="113" />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="EditableElement.elm" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/src/EditableElement.elm">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="73">
+                      <caret line="88" column="54" selection-start-line="88" selection-start-column="54" selection-end-line="88" selection-end-column="54" />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="TableFrame.elm" pinned="false" current-in-tab="false">
                 <entry file="file://$PROJECT_DIR$/src/TableFrame.elm">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state relative-caret-position="303">
-                      <caret line="34" column="50" selection-start-line="34" selection-start-column="50" selection-end-line="34" selection-end-column="50" />
+                    <state relative-caret-position="150">
+                      <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="LabeledGroupCheckBox.elm" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/src/LabeledGroupCheckBox.elm">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="238">
+                      <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="SuggestableSelector.elm" pinned="false" current-in-tab="true">
+                <entry file="file://$PROJECT_DIR$/src/SuggestableSelector.elm">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="237">
+                      <caret line="63" column="14" lean-forward="true" selection-start-line="63" selection-start-column="14" selection-end-line="63" selection-end-column="14" />
                     </state>
                   </provider>
                 </entry>
@@ -122,8 +153,8 @@
           <file leaf-file-name="Main.elm" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/example/Main.elm">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="201">
-                  <caret line="70" column="11" selection-start-line="70" selection-start-column="11" selection-end-line="70" selection-end-column="11" />
+                <state relative-caret-position="116">
+                  <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
                 </state>
               </provider>
             </entry>
@@ -177,8 +208,8 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/TableElement.elm" />
         <option value="$PROJECT_DIR$/src/EditableElement.elm" />
-        <option value="$PROJECT_DIR$/example/Main.elm" />
         <option value="$PROJECT_DIR$/src/TableFrame.elm" />
+        <option value="$PROJECT_DIR$/example/Main.elm" />
       </list>
     </option>
   </component>
@@ -192,9 +223,9 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1920" />
-    <option name="y" value="23" />
-    <option name="width" value="1886" />
+    <option name="x" value="-1379" />
+    <option name="y" value="118" />
+    <option name="width" value="2320" />
     <option name="height" value="838" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -268,7 +299,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -290,8 +322,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -407,10 +438,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47216000" />
+    <option name="totallyTimeSpent" value="47284000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="23" width="1886" height="838" extended-state="0" />
+    <frame x="-1379" y="118" width="2320" height="838" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="PlantUML" order="3" />
@@ -424,23 +455,46 @@
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32793522" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32793522" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.43373495" visible="true" weight="0.11062907" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4317269" visible="true" weight="0.16242318" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info id="Structure" order="1" sideWeight="0.56626505" side_tool="true" visible="true" weight="0.11062907" />
+      <window_info id="Structure" order="1" sideWeight="0.56827307" side_tool="true" weight="0.1922078" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info id="Designer" order="2" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.43373495" visible="true" weight="0.11062907" />
+      <window_info id="Structure" order="1" sideWeight="0.56626505" side_tool="true" visible="true" weight="0.11062907" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="right" id="PlantUML" order="3" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="SBT Console" order="7" weight="0.3292517" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32793522" />
+      <window_info anchor="right" id="Maven Projects" order="3" />
+      <window_info id="Favorites" order="2" side_tool="true" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -450,13 +504,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/elm-stuff/packages/elm-lang/html/2.0.0/src/Html/Attributes.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="224" selection-start-line="224" selection-end-line="224" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/main.css" />
     <entry file="file://$PROJECT_DIR$/scripts/build.js" />
     <entry file="file://$PROJECT_DIR$/config/webpack.config.prod.js" />
@@ -691,8 +738,8 @@
     <entry file="file://$PROJECT_DIR$/package.json" />
     <entry file="file://$PROJECT_DIR$/src/SelectForm.elm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="46" column="17" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="17" />
+        <state relative-caret-position="221">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
         </state>
       </provider>
     </entry>
@@ -722,22 +769,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/EditableElement.elm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/Main.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="264" column="37" lean-forward="true" selection-start-line="264" selection-start-column="37" selection-end-line="264" selection-end-column="37" />
+        <state relative-caret-position="190">
+          <caret line="76" column="26" selection-start-line="76" selection-start-column="26" selection-end-line="76" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TableFrame.elm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="31" column="55" lean-forward="true" selection-start-line="31" selection-start-column="55" selection-end-line="31" selection-end-column="55" />
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SuggestableSelector.elm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="63" column="14" lean-forward="true" selection-start-line="63" selection-start-column="14" selection-end-line="63" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/Main.elm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="117" column="46" selection-start-line="117" selection-start-column="46" selection-end-line="117" selection-end-column="46" />
         </state>
       </provider>
     </entry>
