@@ -1,19 +1,25 @@
 module SelectForm exposing (..)
 
 {-|
+
+
 # Definition
+
 @docs SelectFormConfig
 
+
 # function
+
 @docs defaultSelectConfig, selectForm
 
 -}
+
 import Html exposing (Html, text)
 import Html.Attributes as Attr
 import Html.Events as Events
 
-{-|
--}
+
+{-| -}
 type alias SelectFormConfig a msg =
     { optionAttrs : a -> List (Html.Attribute msg)
     , attrs : List (Html.Attribute msg)
@@ -23,8 +29,8 @@ type alias SelectFormConfig a msg =
     , onSelect : a -> msg
     }
 
-{-|
--}
+
+{-| -}
 defaultSelectConfig : a -> (a -> msg) -> SelectFormConfig a msg
 defaultSelectConfig value onSelect =
     { optionAttrs = \_ -> []
@@ -35,8 +41,8 @@ defaultSelectConfig value onSelect =
     , onSelect = onSelect
     }
 
-{-|
--}
+
+{-| -}
 selectForm : SelectFormConfig a msg -> List a -> Html msg
 selectForm config optionItems =
     let

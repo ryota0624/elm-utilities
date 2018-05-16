@@ -1,10 +1,15 @@
 module LabeledGroupCheckBox exposing (..)
 
 {-|
+
+
 # Definition
+
 @docs LabeledGroupCheckBoxConfig
 
+
 # function
+
 @docs labeledCheckBoxGroup
 
 -}
@@ -13,8 +18,8 @@ import Html exposing (Html, text)
 import Html.Attributes as Attr
 import Html.Events as Events
 
-{-|
--}
+
+{-| -}
 type alias LabeledGroupCheckBoxConfig a msg =
     { uniqueId : a -> String
     , onChangeChecked : List a -> msg
@@ -24,8 +29,8 @@ type alias LabeledGroupCheckBoxConfig a msg =
     , toValueString : a -> String
     }
 
-{-|
--}
+
+{-| -}
 labeledCheckBoxGroup : LabeledGroupCheckBoxConfig a msg -> List a -> List a -> Html msg
 labeledCheckBoxGroup config selectableValues selectedValues =
     config.container
@@ -55,5 +60,3 @@ labeledCheckBoxGroup config selectableValues selectedValues =
                             ]
                 )
         )
-
-

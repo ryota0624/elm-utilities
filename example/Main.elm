@@ -9,6 +9,9 @@ import Task exposing (Task)
 import Html.Events as Events
 import LabeledGroupCheckBox
 import SelectForm
+import TableFrame
+import SuggestableSelector as SS
+
 
 ---- MODEL ----
 
@@ -19,6 +22,7 @@ type alias Id =
 
 type alias Model =
     { users : Dict Id UserFormDto
+    , selector : SS.Selector
     }
 
 
@@ -96,7 +100,13 @@ users =
 
 init : ( Model, Cmd Msg )
 init =
-    ( { users = users |> List.map (\user -> ( user.id, userToDto user )) |> Dict.fromList }, Cmd.none )
+    ( { selector =
+            { status = SS.Close
+            }
+      , users = users |> List.map (\user -> ( user.id, userToDto user )) |> Dict.fromList
+      }
+    , Cmd.none
+    )
 
 
 
@@ -106,6 +116,10 @@ init =
 type Msg
     = UpdateUserDto Id EditableElement.Event UserFormMsg
     | ReceiveFocusResult (Result Dom.Error ())
+    | SaveForm Id UserFormMsg
+    | FocusForm Id UserFormMsg (Task Dom.Error ())
+    | UpdateSelector SS.Selector
+    | Log String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -130,14 +144,36 @@ update msg model =
          ReceiveFocusResult result ->
             ( model, Cmd.none )
 
+        UpdateSelector selector ->
+            ( { model | selector = selector }, Cmd.none )
+
+        Log str ->
+            (model , Cmd.none) |> Debug.log str
 
 
 ---- VIEW ----
 
 
+conf : SS.SelectorConfig String Msg
+conf =
+    { selectorLabel = "SelectorLabel"
+    , notFoundMatchedValueLabel = "一致なし"
+    , placeholder = "入力してね"
+    , optionValues = [ "App", "Apple", "Orange" ]
+    , optionValueToHtml = \value -> Html.li [ Events.onClick <| Log value ] [ Html.text value ]
+    , findSelectorOptionValue = \text -> \value -> String.contains text value
+    , onEvent = UpdateSelector
+    }
+
+
 view : Model -> Html Msg
 view model =
-    Html.ul [] (model.users |> Dict.values |> List.map userEditableElement)
+    Html.div []
+        [ SS.view conf model.selector
+
+                , viewUserTable users
+                , Html.ul [] (model.users |> Dict.values |> List.map userEditableElement)
+        ]
 
 
 userEditableElement : UserFormDto -> Html Msg
@@ -229,6 +265,58 @@ userEditableElement user =
             , uniqueId = "skills"
             }
         ]
+
+
+type UserTableHeader
+    = ID
+    | NAME
+    | AGE
+    | GENDER
+    | SKILLS
+
+
+viewUserTable : List User -> Html msg
+viewUserTable users =
+    TableFrame.view
+        { headerElements = [ NAME, AGE, GENDER, SKILLS, ID ]
+        , datas = users
+        , viewTableContainer = Html.table []
+        , viewBodyContainer = Html.tbody []
+        , viewHeaderContainer = Html.thead []
+        , headerConfig =
+            { viewHeaderRowContainer = Html.tr []
+            , viewHeaderRowCell = \element -> Html.th [] [ Html.text <| toString element ]
+            }
+        , rowConfig =
+            { viewTableRowContainer = \data -> Html.tr []
+            , viewTableRowCell =
+                \data ->
+                    \headerElement ->
+                        let
+                            container element =
+                                Html.td [] [ Html.text element ]
+                        in
+                            container <|
+                                case headerElement of
+                                    ID ->
+                                        data.id |> toString
+
+                                    NAME ->
+                                        data.name
+
+                                    AGE ->
+                                        data.age |> toString
+
+                                    GENDER ->
+                                        data.gender |> toString
+
+                                    SKILLS ->
+                                        data.skills |> toString
+            }
+        }
+
+
+
 ---- PROGRAM ----
 
 
