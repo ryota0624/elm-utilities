@@ -19,6 +19,7 @@ type alias Selector =
 type alias FindSelectorOptionValue selectorOptionValue =
     String -> selectorOptionValue -> Bool
 
+
 type alias SelectorConfig selectorOptionValue msg =
     { selectorLabel : String
     , notFoundMatchedValueLabel : String

@@ -4,9 +4,12 @@ module EditableElement exposing (EditableElement, editableElement, ViewConfig, E
 
 
 # Definition
+
 @docs EditableElement, EditViewProps, ViewConfig, Event
 
+
 # function
+
 @docs editableElement, viewEditableElement
 
 -}
@@ -14,9 +17,14 @@ module EditableElement exposing (EditableElement, editableElement, ViewConfig, E
 import Html exposing (Html, Attribute)
 import Task exposing (Task)
 import Dom
-{-|
--}
-type Event = Save | Focus (Task Dom.Error ()) | Cancel | None
+
+
+{-| -}
+type Event
+    = Save
+    | Focus (Task Dom.Error ())
+    | Cancel
+    | None
 
 
 {-| -}

@@ -11,6 +11,7 @@ import LabeledGroupCheckBox
 import SelectForm
 import TableFrame
 import SuggestableSelector as SS
+import ScheduleSelector as ScheS
 
 
 ---- MODEL ----
@@ -23,6 +24,7 @@ type alias Id =
 type alias Model =
     { users : Dict Id UserFormDto
     , selector : SS.Selector
+    , scheduleSelector : ScheS.ScheduleSelector
     }
 
 
@@ -104,6 +106,7 @@ init =
             { status = SS.Close
             }
       , users = users |> List.map (\user -> ( user.id, userToDto user )) |> Dict.fromList
+      , scheduleSelector = ScheS.emptyScheduleSelector False
       }
     , Cmd.none
     )
@@ -118,35 +121,45 @@ type Msg
     | ReceiveFocusResult (Result Dom.Error ())
     | UpdateSelector SS.Selector
     | Log String
+    | UpdateScheduleSelector ScheS.ScheduleSelector
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-         UpdateUserDto id formEvent userMsg ->
-             let
-                cmd = case formEvent of
-                    EditableElement.Focus task ->
-                        Task.attempt ReceiveFocusResult task
-                    EditableElement.Save ->
-                        Debug.crash ("save")
-                    EditableElement.Cancel ->
-                        Cmd.none
-                    EditableElement.None ->
-                        Cmd.none
+        UpdateUserDto id formEvent userMsg ->
+            let
+                cmd =
+                    case formEvent of
+                        EditableElement.Focus task ->
+                            Task.attempt ReceiveFocusResult task
+
+                        EditableElement.Save ->
+                            Debug.crash ("save")
+
+                        EditableElement.Cancel ->
+                            Cmd.none
+
+                        EditableElement.None ->
+                            Cmd.none
 
                 updatedUsers =
-                   model.users |> Dict.update id (Maybe.map (updateUserFormDto userMsg))
-             in
-                ( { model | users = updatedUsers }, cmd)
-         ReceiveFocusResult result ->
+                    model.users |> Dict.update id (Maybe.map (updateUserFormDto userMsg))
+            in
+                ( { model | users = updatedUsers }, cmd )
+
+        ReceiveFocusResult result ->
             ( model, Cmd.none )
 
-         UpdateSelector selector ->
+        UpdateSelector selector ->
             ( { model | selector = selector }, Cmd.none )
 
-         Log str ->
-            (model , Cmd.none) |> Debug.log str
+        UpdateScheduleSelector selector ->
+            ( { model | scheduleSelector = selector }, Cmd.none )
+
+        Log str ->
+            ( model, Cmd.none ) |> Debug.log str
+
 
 
 ---- VIEW ----
@@ -167,10 +180,10 @@ conf =
 view : Model -> Html Msg
 view model =
     Html.div []
-        [ SS.view conf model.selector
-
-                , viewUserTable users
-                , Html.ul [] (model.users |> Dict.values |> List.map userEditableElement)
+        [ ScheS.view UpdateScheduleSelector model.scheduleSelector
+        , SS.view conf model.selector
+        , viewUserTable users
+        , Html.ul [] (model.users |> Dict.values |> List.map userEditableElement)
         ]
 
 

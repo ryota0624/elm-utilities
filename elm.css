@@ -1,0 +1,25 @@
+.sch-selected {
+    background-color: blue;
+    cursor: pointer;
+}
+
+.sch-selectable {
+    background-color: navajowhite;
+    cursor: crosshair;
+}
+
+.sch-container {
+    user-select: none;
+    -moz-user-select: none; /* Firefox */
+    -webkit-user-select: none; /* Chrome */
+}
+
+.sch-cell {
+    width: 22px !important;
+    height: 22px !important;
+    border: solid 1px #aaaaaa;
+    text-align: center;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
